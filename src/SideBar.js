@@ -3,7 +3,8 @@
 import React, {Component, PropTypes, Children} from 'react';
 import cx from 'classnames';
 
-import * as utils from './utils';
+import {noop, getNavs, isGroup, pick} from './utils';
+import Nav from './Nav';
 import PrimaryPanel from './components/PrimaryPanel';
 import SecondaryPanel from './components/SecondaryPanel';
 
@@ -17,13 +18,14 @@ export default class SideBar extends Component {
     //
     navs: PropTypes.array,
     children: PropTypes.node,
-    selected: PropTypes.string,
+    select: PropTypes.string,
     onSelect: PropTypes.func
   };
 
   static defaultProps = {
     text: 'Reactee',
-    link: '#'
+    link: '#',
+    onSelect: noop
   };
 
   state = {
@@ -31,15 +33,6 @@ export default class SideBar extends Component {
   };
 
   _navTimer;
-
-  isSelected(nav, id) {
-    id = id === undefined ? this.props.selected : id;
-    return nav.props.id === id;
-  }
-
-  getNavs() {
-    return utils.getNavs(this.props.children);
-  }
 
   updateExpandable(val) {
     this.setState({expandable: val});
@@ -73,29 +66,52 @@ export default class SideBar extends Component {
     }
   }
 
-  handleSelection = (...args) => {
+  handleSelect = (fullid, nav) => {
     this.clearNavTimer();
     this.updateExpandable(true);
-    if (this.props.onSelect) {
-      this.props.onSelect(...args);
-    }
+    this.props.onSelect(fullid, nav);
   };
 
-  render() {
-    let selected;
-    const navs = this.getNavs().map(nav => {
-      if (this.isSelected(nav)) {
-        selected = nav;
+  renderNavs(navs, select) {
+    if (!navs) {
+      return navs;
+    }
+
+    const selectToUse = select && select.toLowerCase();
+
+    return navs.map((nav, index) => {
+      if (nav.type !== Nav) {
+        return nav;
       }
+
+      let s = nav.props.id.toLowerCase();
+      if (selectToUse !== s) {
+        s += '.';
+      }
+      // select default index 0 if no selection
+      const selected = selectToUse ? selectToUse.indexOf(s) === 0 : index === 0;
+
+      let children = getNavs(nav);
+      if (selected && isGroup(nav)) {
+        children = this.renderNavs(children, select.substr(s.length));
+      }
+
       return React.cloneElement(nav, {
-        selected: selected === nav
-      });
+        key: nav.props.id,
+        selected: selected,
+      }, children);
     });
+  }
 
-    const settings = utils.pick(this.props, 'icon', 'text', 'link');
-
+  render() {
+    const {select, children}  = this.props;
     const {expandable} = this.state;
-    const expanded = expandable && selected && utils.isGroup(selected);
+
+    const navs = this.renderNavs(getNavs(children), select);
+    const selected = navs.find(nav => nav.props.selected);
+
+    const settings = pick(this.props, 'icon', 'text', 'link');
+    const expanded = expandable && selected && isGroup(selected);
 
     return (
       <div className={cx("sidebar", {
@@ -104,12 +120,12 @@ export default class SideBar extends Component {
            onMouseLeave={this.handleMouseLeave}>
         <PrimaryPanel {...settings}
                       navs={navs}
-                      onSelect={this.handleSelection}
+                      onSelect={this.handleSelect}
                       onMouseEnter={this.handlePrimaryMouseEnter}
         />
         <SecondaryPanel navs={navs}
                         visible={expanded}
-                        onSelect={this.handleSelection}
+                        onSelect={this.handleSelect}
                         onMouseEnter={this.handleSecondaryMouseEnter}/>
       </div>
     );

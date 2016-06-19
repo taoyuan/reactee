@@ -19,7 +19,7 @@ export function getNavs(from) {
       }
     });
   }
-  return navs;
+  return navs.length ? navs : null;
 }
 
 export function pick(o, ...fields) {

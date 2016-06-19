@@ -16,18 +16,19 @@ import {
 class App extends Component {
 
   state = {
-    selected: 'home'
+    select: 'home'
   };
 
-  handleSelection = (item) => {
-    this.setState({selected: item.id});
+  handleSelection = (fullid, nav) => {
+    console.log(fullid);
+    this.setState({select: fullid});
   };
 
   render() {
-    const {selected} = this.state;
+    const {select} = this.state;
 
     return (
-      <SideBar icon="icon.png" selected={selected} onSelect={this.handleSelection}>
+      <SideBar icon="icon.png" select={select} onSelect={this.handleSelection}>
         <Nav id="home" icon={MdHome} text="主页"/>
         <Spacer/>
         <Nav id="hubs" icon={MdDeviceHub} text="Hubs" url="bing.com"/>

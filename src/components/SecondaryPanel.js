@@ -17,9 +17,10 @@ export default class SecondaryPanel extends Component {
     onMouseLeave: PropTypes.func
   };
 
-  handleNavItemClick = (nav) => {
+  handleNavItemClick = (owner, nav) => {
+    const fullid = owner.props.id + '.' + nav.props.id;
     if (this.props.onSelect) {
-      this.props.onSelect(nav.props, nav);
+      this.props.onSelect(fullid, nav);
     }
   };
 
@@ -40,7 +41,7 @@ export default class SecondaryPanel extends Component {
                     <h3 className="heading--callout">{owner.props.text}</h3>
                   </li>
                      {navs.map((nav, index) =>
-                       <NavItem key={`primary-item-${index}`} nav={nav} onClick={this.handleNavItemClick}/>
+                       <NavItem key={`primary-item-${index}`} nav={nav} onClick={(nav) => this.handleNavItemClick(owner, nav)}/>
                      )}
                 </div>
               }

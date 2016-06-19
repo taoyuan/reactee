@@ -16,10 +16,9 @@ export default class PrimaryPanel extends Component {
 
   handleNavItemClick = (nav) => {
     if (this.props.onSelect) {
-      this.props.onSelect(nav.props, nav);
+      this.props.onSelect(nav.props.id, nav);
     }
   };
-
 
   renderPrimaryHeader = () => {
     const {icon, text, link} = this.props;
