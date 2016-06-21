@@ -2,7 +2,7 @@
 
 import React, {Component, PropTypes} from 'react';
 import {Motion, spring} from 'react-motion';
-import {getNavs, pick, isGroup} from '../utils';
+import {getItems, pick, isGroup} from '../utils';
 
 import NavItem from './NavItem';
 
@@ -40,11 +40,11 @@ function getStyles(props, context) {
       borderBottom: `1px solid ${sidebar.headerColor}`
     },
     heading: {
-      fontSize: 16,
-      lineHeight: '1.42857rem',
+      // fontSize: 16,
+      // lineHeight: '1.42857rem',
       fontWeight: 600,
       textTransform: 'uppercase',
-      letterSpacing: '0.04em',
+      // letterSpacing: '0.04em',
       color: sidebar.textColor,
       flex: 1
     },
@@ -67,7 +67,7 @@ function getStyles(props, context) {
 export default class SecondaryPanel extends Component {
 
   static propTypes = {
-    navs: PropTypes.array.isRequired,
+    items: PropTypes.array.isRequired,
     visible: PropTypes.bool,
     onSelect: PropTypes.func,
     onMouseEnter: PropTypes.func,
@@ -78,15 +78,15 @@ export default class SecondaryPanel extends Component {
     teeTheme: PropTypes.object.isRequired,
   };
 
-  handleNavItemClick = (owner, nav) => {
-    const fullid = owner.props.id + '.' + nav.props.id;
+  handleNavItemClick = (owner, item) => {
+    const fullid = owner.props.id + '.' + item.props.id;
     if (this.props.onSelect) {
-      this.props.onSelect(fullid, nav);
+      this.props.onSelect(fullid, item);
     }
   };
 
   renderSecondaryList(owner, styles) {
-    const navs = getNavs(owner);
+    const items = getItems(owner);
     const {populate, sidebar} = this.context.teeTheme;
     return (
       <Motion key={`secondary-${owner.props.id}`}
@@ -103,11 +103,11 @@ export default class SecondaryPanel extends Component {
                   })}
                 >
                   <li style={populate({}, styles.header)}>
-                    <h3 style={populate({}, styles.heading)}>{owner.props.text}</h3>
+                    <h6 style={populate({}, styles.heading)}>{owner.props.text}</h6>
                   </li>
-                  {navs.map((nav, index) =>
-                    <NavItem key={`primary-item-${index}`} nav={nav}
-                             onClick={(nav) => this.handleNavItemClick(owner, nav)}/>
+                  {items.map((item, index) =>
+                    <NavItem key={`primary-item-${index}`} item={item}
+                             onClick={(item) => this.handleNavItemClick(owner, item)}/>
                   )}
                 </div>
               }
@@ -116,7 +116,7 @@ export default class SecondaryPanel extends Component {
   }
 
   render() {
-    const {navs, visible} = this.props;
+    const {items, visible} = this.props;
     const settings = pick(this.props, 'onMouseEnter', 'onMouseLeave');
     const {populate, sidebar} = this.context.teeTheme;
     const styles = getStyles(this.props, this.context);
@@ -127,7 +127,7 @@ export default class SecondaryPanel extends Component {
                      style={populate({}, styles.root, {
                        transform: `translate3d(${x}px, 0, 0)`
                      })}>
-                     {navs.map(nav => isGroup(nav) && this.renderSecondaryList(nav, styles))}
+                     {items.map(item => isGroup(item) && this.renderSecondaryList(item, styles))}
                 </div>
               }
       </Motion>

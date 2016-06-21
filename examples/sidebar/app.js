@@ -3,7 +3,7 @@
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 
-import {TeeThemeProvider, SideBar, Nav, Spacer} from '../../src';
+import {TeeThemeProvider, SideBar, Header, Footer, Nav, Spacer, FlexSpacer} from '../../src';
 
 import {
   MdHome,
@@ -29,8 +29,9 @@ class App extends Component {
 
     return (
       <TeeThemeProvider>
-        <SideBar icon="icon.png" text='reactee' select={select} onSelect={this.handleSelection}>
-          <Nav id="home" icon={MdHome} text="Home"/>
+        <SideBar select={select} onSelect={this.handleSelection}>
+          <Header icon="icon.png" text='Reactee' onClick={() => alert("I'm Reactee")}/>
+          <Nav id="home" icon={MdHome} text="主页"/>
           <Nav id="hubs" icon={MdDeviceHub} text="Hubs"/>
           <Nav id="device" icon={MdDevicesOther} text="Devices"/>
           <Spacer/>
@@ -42,6 +43,8 @@ class App extends Component {
             <Nav id="account" text="Account"/>
             <Nav id="password" text="Password"/>
           </Nav>
+          <FlexSpacer/>
+          <Footer avatarText="Tao Yuan" text="Balabala Go" subText="Tao Yuan"/>
         </SideBar>
       </TeeThemeProvider>
     );

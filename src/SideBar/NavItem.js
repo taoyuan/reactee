@@ -4,12 +4,12 @@ import React, {Component, PropTypes} from 'react';
 import cx from 'classnames';
 
 import {isGroup, noop} from '../utils';
-import Spacer from './Spacer';
-import ChevronRight from './ChevronRight';
+import Nav from './Nav';
+import ArrowRight from './ArrowRight';
 
 function getStyles(props, context, state) {
-  const {nav, expanded} = props;
-  const {selected} = nav.props;
+  const {item, expanded} = props;
+  const {selected} = item.props;
   const {sidebar} = context.teeTheme;
 
   const textColor = state.hovered ? sidebar.hoverTextColor : (
@@ -23,7 +23,6 @@ function getStyles(props, context, state) {
       backgroundColor: selected && sidebar.selectedColor
     },
     link: {
-      fontSize: 14,
       textTransform: 'initial',
       letterSpacing: 'initial',
       color: textColor,
@@ -58,8 +57,8 @@ function getStyles(props, context, state) {
       width: sidebar.iconSize,
       height: sidebar.iconSize
     },
-    expander: {
-      fontSize: 18,
+    arrow: {
+      fontSize: 16,
       color: textColor,
       textDecoration: 'none'
     }
@@ -69,7 +68,7 @@ function getStyles(props, context, state) {
 export default class NavItem extends Component {
 
   static propTypes = {
-    nav: PropTypes.element.isRequired,
+    item: PropTypes.element.isRequired,
     expanded: PropTypes.bool,
     onClick: PropTypes.func,
     onMouseLeave: PropTypes.func,
@@ -100,9 +99,9 @@ export default class NavItem extends Component {
     this.props.onMouseEnter(event);
   };
 
-  handleClick = (nav) => {
+  handleClick = (item) => {
     if (this.props.onClick) {
-      this.props.onClick(nav);
+      this.props.onClick(item);
     }
   };
 
@@ -116,27 +115,27 @@ export default class NavItem extends Component {
   }
 
   render() {
-    const {nav} = this.props;
-    if (nav.type === Spacer) {
-      return nav;
+    const {item} = this.props;
+    if (item.type !== Nav) {
+      return item;
     }
 
-    const {icon, text, url} = nav.props;
+    const {icon, text, url} = item.props;
 
     const {populate} = this.context.teeTheme;
     const styles = getStyles(this.props, this.context, this.state);
 
 
-    const openable = isGroup(nav);
-    const expander = openable && <ChevronRight size={20} style={populate(styles.expander)}/>;
+    const openable = isGroup(item);
+    const arrow = openable && <ArrowRight size={20} style={populate(styles.arrow)}/>;
     return (
       <li style={populate(styles.root)}
           onMouseEnter={this.handleMouseEnter}
           onMouseLeave={this.handleMouseLeave}>
-        <a style={populate(styles.link)} href={url} onClick={() => this.handleClick(nav)}>
+        <a style={populate(styles.link)} href={url} onClick={() => this.handleClick(item)}>
            {icon && this.renderIcon(icon, styles.icon)}
            {icon ? <span style={populate(styles.text)}>{text}</span> : text}
-           {expander}
+           {arrow}
         </a>
       </li>
     )

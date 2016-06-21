@@ -2,11 +2,11 @@
 
 import React, {Component} from 'react';
 
-export default class Spacer extends Component {
+export default class FlexSpacer extends Component {
 
   render() {
     const style = {
-      height: 20,
+      flex: 1,
       minHeight: 20
     };
     return <li style={style}/>

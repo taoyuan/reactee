@@ -29,36 +29,6 @@ function getStyles(props, context) {
       display: 'flex',
       flexDirection: 'column',
       transition: 'background-color 200ms ease'
-    },
-    headerLink: {
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'space-between',
-      textDecoration: 'none',
-    },
-    headerLogo: {
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'space-between',
-      backgroundColor: sidebar.headerColor,
-      borderBottom: '1px solid transparent',
-      height: sidebar.headerHeight,
-      paddingLeft: sidebar.indent - (sidebar.headerLogoImageSize - sidebar.itemIconSize) / 2,
-      transition: 'background-color 200ms ease 0s'
-    },
-    headerLogoImage: {
-      flex: 'initial',
-      width: 'auto',
-      height: sidebar.headerLogoImageSize
-    },
-    headerLogoText: {
-      flex: 1,
-      marginTop: 4,
-      color: sidebar.headerTextColor,
-      fontSize: 18,
-      transition: 'transform 200ms ease, opacity 200ms ease',
-      transform: expanded ? 'translateX(-15px)' : null,
-      opacity: expanded ? 0 : 1
     }
   }
 }
@@ -66,7 +36,9 @@ function getStyles(props, context) {
 export default class PrimaryPanel extends Component {
 
   static propTypes = {
-    navs: PropTypes.array.isRequired,
+    header: PropTypes.element,
+    footer: PropTypes.element,
+    items: PropTypes.array.isRequired,
     expanded: PropTypes.bool,
     onSelect: PropTypes.func,
     onMouseEnter: PropTypes.func,
@@ -83,38 +55,21 @@ export default class PrimaryPanel extends Component {
     }
   };
 
-  renderPrimaryHeader = (populate, styles) => {
-    const {icon, text, link} = this.props;
-
-    function renderLogo() {
-      if (typeof icon === 'function') {
-        return React.createElement(icon, {style: populate(styles.headerLogoImage)});
-      } else {
-        return <img style={populate(styles.headerLogoImage)} src={icon}/>;
-      }
-    }
-
-    return (
-      <header style={populate(styles.headerLogo)}>
-        <a href={link} style={populate(styles.headerLink)}>
-           {renderLogo()}
-             <span style={populate(styles.headerLogoText)}>{text}</span>
-        </a>
-      </header>
-    )
-  };
-
   render() {
-    const {navs, expanded} = this.props;
+    const {header, footer, items, expanded} = this.props;
     const settings = pick(this.props, 'onMouseEnter', 'onMouseLeave');
     const {populate} = this.context.teeTheme;
     const styles = getStyles(this.props, this.context);
     return (
       <div {...settings} style={populate(styles.root)}>
-           {this.renderPrimaryHeader(populate, styles)}
-           {navs.map((nav, index) =>
-             <NavItem key={`primary-item-${index}`} nav={nav} expanded={expanded} onClick={this.handleNavItemClick}/>
+           {header}
+           <section style={{flex: 1}}>
+           {/*{this.renderPrimaryHeader(populate, styles)}*/}
+           {items.map((item, index) =>
+             <NavItem key={`primary-item-${index}`} item={item} expanded={expanded} onClick={this.handleNavItemClick}/>
            )}
+           </section>
+           {footer}
       </div>
     )
   }

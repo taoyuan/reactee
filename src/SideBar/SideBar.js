@@ -1,11 +1,19 @@
 "use strict";
 
 import React, {Component, PropTypes} from 'react';
+import warning from "warning";
 
-import {noop, getNavs, isGroup, pick} from '../utils';
+import {noop, getItems, isGroup, pick} from '../utils';
+
+import Header from './Header';
+import Footer from './Footer';
 import Nav from './Nav';
+import Spacer from './Spacer';
+import FlexSpacer from './FlexSpacer';
+
 import PrimaryPanel from './PrimaryPanel';
 import SecondaryPanel from './SecondaryPanel';
+
 
 function getStyles(props, context) {
   const {
@@ -18,6 +26,7 @@ function getStyles(props, context) {
 
   return {
     root: {
+      fontSize: 13,
       fontFamily: fontFamily,
       zIndex: zIndex.sidebar,
       width: sidebar.width,
@@ -37,8 +46,8 @@ export default class SideBar extends Component {
   static propTypes = {
     // header settings
     icon: PropTypes.any,
-    text: PropTypes.string,
     link: PropTypes.string,
+    text: PropTypes.string,
     //
     navs: PropTypes.array,
     children: PropTypes.node,
@@ -100,7 +109,31 @@ export default class SideBar extends Component {
     this.props.onSelect(fullid, nav);
   };
 
-  renderNavs(navs, select) {
+  parseChildren(children) {
+    const VLAID_CHILDREN = [Header, Footer, Nav, Spacer, FlexSpacer];
+    let header, footer, items = [];
+
+    React.Children.forEach(children, (item, index) => {
+      if (React.isValidElement(item)) {
+
+        warning(VLAID_CHILDREN.indexOf(item.type) >= 0,
+          `SideBar only accepts Header, Footer and Nav Components as children. 
+          Found '${item.type.name}' as child number ${index + 1} of SideBar`);
+
+        if (item.type === Header) {
+          header = item;
+        } else if (item.type === Footer) {
+          footer = item;
+        } else {
+          items.push(item);
+        }
+      }
+    });
+
+    return {header, footer, items};
+  }
+
+  renderItems(navs, select) {
     if (!navs) {
       return navs;
     }
@@ -119,9 +152,9 @@ export default class SideBar extends Component {
       // select default index 0 if no selection
       const selected = selectToUse ? selectToUse.indexOf(s) === 0 : index === 0;
 
-      let children = getNavs(nav);
+      let children = getItems(nav);
       if (selected && isGroup(nav)) {
-        children = this.renderNavs(children, select.substr(s.length));
+        children = this.renderItems(children, select.substr(s.length));
       }
 
       return React.cloneElement(nav, {
@@ -135,12 +168,14 @@ export default class SideBar extends Component {
     const {select, children}  = this.props;
     const {expandable} = this.state;
 
-    const navs = this.renderNavs(getNavs(children), select);
-    const selected = navs.find(nav => nav.props.selected);
+    let {header, footer, items} = this.parseChildren(children);
+    items = this.renderItems(items, select);
 
+    const selected = items.find(nav => nav.props.selected);
     const expanded = expandable && selected && isGroup(selected);
-    const settings = pick(this.props, 'icon', 'text', 'link');
-    settings.expanded = expanded;
+
+    if (header) header = React.cloneElement(header, {expanded: expanded});
+    if (footer) footer = React.cloneElement(footer, {expanded: expanded});
 
     const {populate} = this.context.teeTheme;
     const styles = getStyles(this.props, this.context);
@@ -148,12 +183,14 @@ export default class SideBar extends Component {
     return (
       <div style={populate(styles.root)}
            onMouseLeave={this.handleMouseLeave}>
-        <PrimaryPanel {...settings}
-                      navs={navs}
+        <PrimaryPanel expanded={expanded}
+                      header={header}
+                      footer={footer}
+                      items={items}
                       onSelect={this.handleSelect}
                       onMouseEnter={this.handlePrimaryMouseEnter}
         />
-        <SecondaryPanel navs={navs}
+        <SecondaryPanel items={items}
                         visible={expanded}
                         onSelect={this.handleSelect}
                         onMouseEnter={this.handleSecondaryMouseEnter}/>

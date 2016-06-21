@@ -9,7 +9,7 @@ export function isGroup(nav) {
   return nav && !!nav.props.children;
 }
 
-export function getNavs(from) {
+export function getItems(from) {
   const navs = [];
   const children = Array.isArray(from) ? from : from.props.children;
   if (children) {

@@ -32,7 +32,7 @@ export default function getTeeTheme(teeTheme, ...more) {
     sidebar: {
       width: 240,
       headerHeight: 56,
-      headerLogoImageSize: 36,
+      headerImageSize: 36,
       indent: 20,
       collapseWidth: 56,
       itemHeight: 40,
