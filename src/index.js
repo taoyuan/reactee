@@ -1,6 +1,4 @@
-import './styles/styles.global.less';
+"use strict";
 
-export {default as SideBar} from './SideBar';
-export {default as Nav} from './Nav';
-export {default as Spacer} from './components/Spacer';
-
+export * from './SideBar';
+export TeeThemeProvider from './theme/TeeThemeProvider';

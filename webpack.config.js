@@ -1,7 +1,7 @@
 var fs = require('fs');
 var path = require('path');
 var webpack = require('webpack');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
+// const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 var EXAMPLES_DIR = path.resolve(process.cwd(), 'examples');
 
@@ -45,15 +45,15 @@ module.exports = {
         exclude: /node_modules/,
         loader: 'babel-loader'
       },
-      {
-        test: /\.global\.(css|less)$/,
-        loader: ExtractTextPlugin.extract('style', 'css?sourceMap!postcss!less?sourceMap')
-      },
-
-      {
-        test: /^((?!\.global).)*\.(css|less)$/,
-        loader: ExtractTextPlugin.extract('style', 'css?sourceMap&modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!postcss!less?sourceMap')
-      },
+      // {
+      //   test: /\.global\.(css|less)$/,
+      //   loader: ExtractTextPlugin.extract('style', 'css?sourceMap!postcss!less?sourceMap')
+      // },
+      //
+      // {
+      //   test: /^((?!\.global).)*\.(css|less)$/,
+      //   loader: ExtractTextPlugin.extract('style', 'css?sourceMap&modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!postcss!less?sourceMap')
+      // },
       {
         test: /\.(png|jpg|gif|woff|woff2)$/,
         loader: 'url-loader?limit=8192'
@@ -66,7 +66,7 @@ module.exports = {
   },
 
   plugins: [
-    new ExtractTextPlugin('style.css', {allChunks: true}),
+    // new ExtractTextPlugin('style.css', {allChunks: true}),
     new webpack.optimize.CommonsChunkPlugin('shared.js')
   ]
 

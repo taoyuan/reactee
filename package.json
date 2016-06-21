@@ -79,11 +79,14 @@
   },
   "dependencies": {
     "classnames": "^2.2",
+    "inline-style-prefixer": "^1.0.4",
     "invariant": "^2.2.1",
-    "js-stylesheet": "^0.0.1",
+    "lodash": "^4.13.1",
     "object-assign": "^4.1.0",
     "react-icon-base": "^2.0.0",
-    "react-motion": "^0.4.4"
+    "react-motion": "^0.4.4",
+    "recompose": "^0.20.0",
+    "warning": "^3.0.0"
   },
   "jest": {
     "automock": false,

@@ -1,12 +1,36 @@
 "use strict";
 
-import React, {Component, PropTypes, Children} from 'react';
-import cx from 'classnames';
+import React, {Component, PropTypes} from 'react';
 
-import {noop, getNavs, isGroup, pick} from './utils';
+import {noop, getNavs, isGroup, pick} from '../utils';
 import Nav from './Nav';
-import PrimaryPanel from './components/PrimaryPanel';
-import SecondaryPanel from './components/SecondaryPanel';
+import PrimaryPanel from './PrimaryPanel';
+import SecondaryPanel from './SecondaryPanel';
+
+function getStyles(props, context) {
+  const {
+    teeTheme: {
+      sidebar,
+      zIndex,
+      fontFamily
+    }
+  } = context;
+
+  return {
+    root: {
+      fontFamily: fontFamily,
+      zIndex: zIndex.sidebar,
+      width: sidebar.width,
+      top: 0,
+      left: 0,
+      bottom: 0,
+      overflowX: 'hidden',
+      overflowY: 'auto',
+      position: 'absolute',
+      listStyle: 'none'
+    }
+  }
+}
 
 export default class SideBar extends Component {
 
@@ -28,11 +52,18 @@ export default class SideBar extends Component {
     onSelect: noop
   };
 
+  static contextTypes = {
+    teeTheme: PropTypes.object.isRequired,
+  };
+
   state = {
     expandable: true
   };
 
   _navTimer;
+
+  componentWillMount() {
+  }
 
   updateExpandable(val) {
     this.setState({expandable: val});
@@ -43,18 +74,15 @@ export default class SideBar extends Component {
   }
 
   handlePrimaryMouseEnter = (e) => {
-    e && e.stopPropagation();
     this.clearNavTimer();
     this.delayUpdateExpandable(false);
   };
 
   handleSecondaryMouseEnter = (e) => {
-    e && e.stopPropagation();
     this.clearNavTimer();
   };
 
   handleMouseLeave = (e) => {
-    e && e.stopPropagation();
     this.clearNavTimer();
     this.delayUpdateExpandable(true);
   };
@@ -110,13 +138,15 @@ export default class SideBar extends Component {
     const navs = this.renderNavs(getNavs(children), select);
     const selected = navs.find(nav => nav.props.selected);
 
-    const settings = pick(this.props, 'icon', 'text', 'link');
     const expanded = expandable && selected && isGroup(selected);
+    const settings = pick(this.props, 'icon', 'text', 'link');
+    settings.expanded = expanded;
+
+    const {populate} = this.context.teeTheme;
+    const styles = getStyles(this.props, this.context);
 
     return (
-      <div className={cx("sidebar", {
-        'nav-panel--expanded': expanded
-      })}
+      <div style={populate(styles.root)}
            onMouseLeave={this.handleMouseLeave}>
         <PrimaryPanel {...settings}
                       navs={navs}
