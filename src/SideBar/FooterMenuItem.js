@@ -2,6 +2,30 @@
 
 import React, {Component, PropTypes} from 'react';
 
+function getStyles(props, context, state) {
+  const {hovered} = state;
+  const {
+    teeTheme: {
+      sidebar
+    }
+  } = context;
+
+  return {
+    root: {
+      listStyle: 'none',
+      margin: 0
+    },
+    link: {
+      display: 'block',
+      padding: '5px 20px 5px 5px',
+      cursor: 'pointer',
+      color: sidebar.footerLinkColor,
+      textAlign: 'left',
+      textDecoration: hovered ? 'underline' : 'none'
+    }
+  }
+}
+
 
 export default class FooterMenuItem extends Component {
 
@@ -10,30 +34,58 @@ export default class FooterMenuItem extends Component {
     style: PropTypes.object,
     linkStyle: PropTypes.object,
     url: PropTypes.string,
-    text: PropTypes.string
+    text: PropTypes.string,
+    onClick: PropTypes.func,
+    onMouseLeave: PropTypes.func,
+    onMouseEnter: PropTypes.func,
+  };
+
+  static contextTypes = {
+    teeTheme: PropTypes.object.isRequired,
+  };
+
+  state = {
+    hovered: false
+  };
+
+  updateState(...args) {
+    this.setState(Object.assign({}, this.state, ...args));
+  }
+
+  handleClick = (event) => {
+    if (this.props.onClick) {
+      this.props.onClick(event);
+    }
+  };
+
+  handleMouseLeave = (event) => {
+    this.updateState({hovered: false});
+    if (this.props.onMouseLeave) {
+      this.props.onMouseLeave(event);
+    }
+  };
+
+  handleMouseEnter = (event) => {
+    this.updateState({hovered: true});
+    if (this.props.onMouseEnter) {
+      this.props.onMouseEnter(event);
+    }
   };
 
   render() {
 
-    let {className, style, linkStyle, url, text} = this.props;
+    const {className, style, linkStyle, url, text} = this.props;
 
-    style = Object.assign({
-      listStyle: 'none',
-      margin: 0
-    }, style);
-
-
-    linkStyle = Object.assign({
-      display: 'block',
-      padding: '5px 20px 5px 5px',
-      cursor: 'pointer',
-      color: '#0069a6',
-      textDecoration: 'none'
-    }, linkStyle);
+    const {populate} = this.context.teeTheme;
+    const styles = getStyles(this.props, this.context, this.state);
 
     return (
-      <li className={className} style={style}>
-        <a href={url} style={linkStyle}>
+      <li className={className} style={{...populate(styles.root), ...style}}
+          onClick={this.handleClick}
+          onMouseEnter={this.handleMouseEnter}
+          onMouseLeave={this.handleMouseLeave}
+      >
+        <a href={url} style={{...populate(styles.link), ...linkStyle}}>
            {text}
         </a>
       </li>

@@ -40,7 +40,6 @@ function getStyles(props, context, state) {
       border: `1px solid ${borderColor}`
     },
     content: {
-      // padding: '9px 14px',
     },
     arrow: {
       position: 'absolute',

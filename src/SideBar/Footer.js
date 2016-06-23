@@ -97,6 +97,12 @@ export default class Footer extends Component {
     showPopover: false
   };
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.expanded) {
+      this.updateState({showPopover: false});  
+    }
+  }
+
   updateState(...args) {
     this.setState(Object.assign({}, this.state, ...args));
   }
@@ -136,10 +142,11 @@ export default class Footer extends Component {
     )
   }
 
-  renderChildren(children) {
+  renderChildren(children, theme) {
+    const {sidebar} = theme;
     return React.Children.map(children, (child, index) => {
       const style = {
-        borderTop: '1px solid #ebeef0'
+        borderTop: `1px solid ${sidebar.footerSectionDivideColor}`
       };
       return React.cloneElement(child, {
         key: 'footer-menu-' + index,
@@ -150,14 +157,14 @@ export default class Footer extends Component {
 
   render() {
     const {avatarText, children} = this.props;
-
+    const {showPopover} = this.state;
     const {populate} = this.context.teeTheme;
     const styles = getStyles(this.props, this.context, this.state);
 
     return (
-      <footer style={populate(styles.root)}
-              onMouseEnter={this.handleMouseEnter}
-              onMouseLeave={this.handleMouseLeave}
+      <div style={populate(styles.root)}
+           onMouseEnter={this.handleMouseEnter}
+           onMouseLeave={this.handleMouseLeave}
       >
         <div ref="target" style={populate(styles.link)} onClick={this.handleClick}>
           <Avatar name={avatarText} size={40} round/>
@@ -167,15 +174,15 @@ export default class Footer extends Component {
         <Popover
           rootClose
           borderColor="transparent"
-          show={this.state.showPopover}
+          show={showPopover}
           onHide={() => this.updateState({showPopover: false})}
           placement="top"
           container={this}
           target={ props => ReactDOM.findDOMNode(this.refs.target)}
         >
-          {this.renderChildren(children)}
+          {this.renderChildren(children, this.context.teeTheme)}
         </Popover>
-      </footer>
+      </div>
     )
   }
 }

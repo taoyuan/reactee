@@ -46,7 +46,9 @@ export default function getTeeTheme(teeTheme, ...more) {
       itemTextColor: '#c3cfd8',
       hoverTextColor: white,
       selectedTextColor: white,
-      textColor: white
+      textColor: white,
+      footerLinkColor: '#0069a6',
+      footerSectionDivideColor: '#ebeef0'
     },
     popover: {
       textColor: black,

@@ -91,7 +91,20 @@ export default class SideBar extends Component {
     this.clearNavTimer();
   };
 
-  handleMouseLeave = (e) => {
+  handleMouseLeave = (event) => {
+    const root = this.refs.sidebar;
+    //this is the original element the event handler was assigned to
+    let e = event.toElement || event.relatedTarget;
+
+    //check for all children levels (checking from bottom up)
+    while (e && e.parentNode && e.parentNode != window) {
+      if (e.parentNode == root || e == root) {
+        if (e.preventDefault) e.preventDefault();
+        return false;
+      }
+      e = e.parentNode;
+    }
+
     this.clearNavTimer();
     this.delayUpdateExpandable(true);
   };
@@ -181,7 +194,8 @@ export default class SideBar extends Component {
     const styles = getStyles(this.props, this.context);
 
     return (
-      <div style={populate(styles.root)}
+      <div ref="sidebar"
+           style={populate(styles.root)}
            onMouseLeave={this.handleMouseLeave}>
         <PrimaryPanel expanded={expanded}
                       header={header}

@@ -49,10 +49,8 @@ class App extends Component {
           <FlexSpacer/>
           <Footer avatarText="Tao Yuan" text="Balabala Go" subText="Tao Yuan">
             <FooterMenuSection>
-              <FooterMenuItem url="http://bing.com" text="Go To Bing"/>
-            </FooterMenuSection>
-            <FooterMenuSection>
-              <FooterMenuItem url="http://baidu.com" text="Go To Biadu"/>
+              <FooterMenuItem text="Your Profile"/>
+              <FooterMenuItem text="Log Out"/>
             </FooterMenuSection>
           </Footer>
         </SideBar>
