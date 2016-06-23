@@ -1,6 +1,6 @@
 {
   "name": "reactee",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A React SideBar component",
   "main": "lib/index.js",
   "scripts": {
@@ -32,9 +32,11 @@
   "homepage": "https://github.com/taoyuan/reactee",
   "keywords": [
     "react",
-    "routee",
-    "router",
-    "route",
+    "ui",
+    "sidebar",
+    "sidenav",
+    "popover",
+    "popup",
     "react-component"
   ],
   "peerDependencies": {
