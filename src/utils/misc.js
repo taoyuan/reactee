@@ -28,3 +28,9 @@ export function pick(o, ...fields) {
     return a;
   }, {});
 }
+
+export function styleSides(defaults, props) {
+  return ['top', 'right', 'bottom', 'left'].map(side => {
+    return props && side in props ? props[side] : defaults;
+  }).reduce((result, side) => `${result} ${side}`, '').substr(1);
+}

@@ -3,7 +3,7 @@ var webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 var BASE_DIR = process.cwd();
-var COMPONENT_FILE = 'reactee-sidebar';
+var COMPONENT_FILE = 'reactee';
 var COMPONENT_NAME = 'SideBar';
 
 var plugins = [

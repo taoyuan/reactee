@@ -47,6 +47,12 @@ export default function getTeeTheme(teeTheme, ...more) {
       hoverTextColor: white,
       selectedTextColor: white,
       textColor: white
+    },
+    popover: {
+      textColor: black,
+      borderColor: '#ccc',
+      backgroundColor: '#fff',
+      arrowSize: 11,
     }
   }, teeTheme, {
     baseTheme, // To provide backward compatibility.
