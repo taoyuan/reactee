@@ -16,8 +16,16 @@ function getStyles(props, context, state) {
     }
   } = context;
 
+  let {
+    color = popover.textColor,
+    borderColor = popover.borderColor,
+    backgroundColor = popover.backgroundColor
+  } = props;
+
   const {arrowSize} = popover;
   const arrowMaskSize = arrowSize - 1;
+
+  borderColor = borderColor || popover.borderColor;
 
   return {
     root: {
@@ -25,11 +33,11 @@ function getStyles(props, context, state) {
       top: 0,
       left: 0,
       padding: 1,
-      color: popover.textColor,
+      color: color,
       textAlign: 'center',
       borderRadius: 3,
-      backgroundColor: popover.backgroundColor,
-      border: `1px solid ${popover.borderColor}`
+      backgroundColor: backgroundColor,
+      border: `1px solid ${borderColor}`
     },
     content: {
       padding: '9px 14px',
@@ -56,14 +64,14 @@ function getStyles(props, context, state) {
           right: -arrowSize,
           marginTop: -arrowSize,
           borderWidth: styleSides(arrowSize + 'px', {right: 0}),
-          borderColor: styleSides('transparent', {left: popover.borderColor})
+          borderColor: styleSides('transparent', {left: borderColor})
         },
         arrowMask: {
           top: '50%',
           right: -arrowMaskSize,
           marginTop: -arrowSize,
           borderWidth: styleSides(arrowSize + 'px', {right: 0}),
-          borderColor: styleSides('transparent', {left: popover.backgroundColor})
+          borderColor: styleSides('transparent', {left: backgroundColor})
         }
       },
       right: {
@@ -75,14 +83,14 @@ function getStyles(props, context, state) {
           left: -arrowSize,
           marginTop: -arrowSize,
           borderWidth: styleSides(arrowSize + 'px', {left: 0}),
-          borderColor: styleSides('transparent', {right: popover.borderColor})
+          borderColor: styleSides('transparent', {right: borderColor})
         },
         arrowMask: {
           top: '50%',
           left: -arrowMaskSize,
           marginTop: -arrowSize,
           borderWidth: styleSides(arrowSize + 'px', {left: 0}),
-          borderColor: styleSides('transparent', {right: popover.backgroundColor})
+          borderColor: styleSides('transparent', {right: backgroundColor})
         }
       },
       top: {
@@ -94,14 +102,14 @@ function getStyles(props, context, state) {
           bottom: -arrowSize,
           marginLeft: -arrowSize,
           borderWidth: styleSides(arrowSize + 'px', {bottom: 0}),
-          borderColor: styleSides('transparent', {top: popover.borderColor})
+          borderColor: styleSides('transparent', {top: borderColor})
         },
         arrowMask: {
           left: '50%',
           bottom: -arrowMaskSize,
           marginLeft: -arrowSize,
           borderWidth: styleSides(arrowSize + 'px', {bottom: 0}),
-          borderColor: styleSides('transparent', {top: popover.backgroundColor})
+          borderColor: styleSides('transparent', {top: backgroundColor})
         }
       },
       bottom: {
@@ -113,14 +121,14 @@ function getStyles(props, context, state) {
           top: -arrowSize,
           marginLeft: -arrowSize,
           borderWidth: styleSides(arrowSize + 'px', {top: 0}),
-          borderColor: styleSides('transparent', {bottom: popover.borderColor})
+          borderColor: styleSides('transparent', {bottom: borderColor})
         },
         arrowMask: {
           left: '50%',
           top: -arrowMaskSize,
           marginLeft: -arrowSize,
           borderWidth: styleSides(arrowSize + 'px', {top: 0}),
-          borderColor: styleSides('transparent', {bottom: popover.backgroundColor})
+          borderColor: styleSides('transparent', {bottom: backgroundColor})
         }
       }
     }
@@ -130,8 +138,12 @@ function getStyles(props, context, state) {
 class PopoverPanel extends React.Component {
 
   static propTypes = {
-    placement: PropTypes.string,
+    className: PropTypes.string,
     style: PropTypes.object,
+    color: PropTypes.string,
+    borderColor: PropTypes.string,
+    backgroundColor: PropTypes.string,
+    placement: PropTypes.string,
     left: PropTypes.object,
     top: PropTypes.object,
     children: PropTypes.any
@@ -149,14 +161,14 @@ class PopoverPanel extends React.Component {
     const {populate} = this.context.teeTheme;
     const styles = getStyles(this.props, this.context, this.state);
     const placementStyle = styles.placement[this.props.placement];
-    const {style, children} = this.props;
+    const {className, style, children} = this.props;
 
     const popoverStyle = populate({}, styles.root, placementStyle.popover, style);
     const arrowStyle = populate({}, styles.arrow, placementStyle.arrow);
     const arrowMaskStyle = populate(styles.arrow, placementStyle.arrowMask);
 
     return (
-      <div style={popoverStyle}>
+      <div className={className} style={popoverStyle}>
         <div style={arrowStyle}/>
         <div style={arrowMaskStyle}/>
         <div style={populate(styles.content)}>

@@ -48,6 +48,9 @@ class App extends Component {
           </p>
 
           <Popover
+            color="white"
+            borderColor="transparent"
+            backgroundColor="black"
             show={this.state.show}
             onHide={() => this.setState({show: false})}
             placement={this.state.placement}

@@ -52,7 +52,7 @@ export default function getTeeTheme(teeTheme, ...more) {
       textColor: black,
       borderColor: '#ccc',
       backgroundColor: '#fff',
-      arrowSize: 11,
+      arrowSize: 8,
     }
   }, teeTheme, {
     baseTheme, // To provide backward compatibility.
