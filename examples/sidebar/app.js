@@ -3,7 +3,10 @@
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 
-import {TeeThemeProvider, SideBar, Header, Footer, Nav, Spacer, FlexSpacer} from '../../src';
+import {
+  TeeThemeProvider, SideBar, Header, Nav, Spacer, FlexSpacer, Footer,
+  FooterMenuSection, FooterMenuItem
+} from '../../src';
 
 import {
   MdHome,
@@ -44,7 +47,14 @@ class App extends Component {
             <Nav id="password" text="Password"/>
           </Nav>
           <FlexSpacer/>
-          <Footer avatarText="Tao Yuan" text="Balabala Go" subText="Tao Yuan"/>
+          <Footer avatarText="Tao Yuan" text="Balabala Go" subText="Tao Yuan">
+            <FooterMenuSection>
+              <FooterMenuItem url="http://bing.com" text="Go To Bing"/>
+            </FooterMenuSection>
+            <FooterMenuSection>
+              <FooterMenuItem url="http://baidu.com" text="Go To Biadu"/>
+            </FooterMenuSection>
+          </Footer>
         </SideBar>
       </TeeThemeProvider>
     );

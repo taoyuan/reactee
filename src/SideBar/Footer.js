@@ -1,9 +1,12 @@
 "use strict";
 
 import React, {Component, PropTypes} from 'react';
+import ReactDOM from 'react-dom';
 import Avatar from 'react-avatar';
 import ArrowUp from './ArrowUp'
 import {noop} from '../utils';
+
+import {Popover} from '../Popover';
 
 function getStyles(props, context, state) {
   const {expanded} = props;
@@ -18,6 +21,7 @@ function getStyles(props, context, state) {
 
   return {
     root: {
+      position: 'relative',
       fontFamily: 'BlinkMacSystemFont ' + fontFamily,
       paddingBottom: 10,
       display: 'block',
@@ -90,15 +94,24 @@ export default class Footer extends Component {
 
   state = {
     hovered: false,
+    showPopover: false
+  };
+
+  updateState(...args) {
+    this.setState(Object.assign({}, this.state, ...args));
+  }
+
+  handleClick = (e) => {
+    this.updateState({showPopover: !this.state.showPopover});
   };
 
   handleMouseLeave = (event) => {
-    this.setState({hovered: false});
+    this.updateState({hovered: false});
     this.props.onMouseLeave(event);
   };
 
   handleMouseEnter = (event) => {
-    this.setState({hovered: true});
+    this.updateState({hovered: true});
     this.props.onMouseEnter(event);
   };
 
@@ -123,21 +136,45 @@ export default class Footer extends Component {
     )
   }
 
+  renderChildren(children) {
+    return React.Children.map(children, (child, index) => {
+      const style = {
+        borderTop: '1px solid #ebeef0'
+      };
+      return React.cloneElement(child, {
+        key: 'footer-menu-' + index,
+        style: index ? style : null
+      })
+    });
+  }
+
   render() {
-    const {avatarText} = this.props;
+    const {avatarText, children} = this.props;
 
     const {populate} = this.context.teeTheme;
     const styles = getStyles(this.props, this.context, this.state);
 
     return (
       <footer style={populate(styles.root)}
-          onMouseEnter={this.handleMouseEnter}
-          onMouseLeave={this.handleMouseLeave}>
-        <div style={populate(styles.link)}>
+              onMouseEnter={this.handleMouseEnter}
+              onMouseLeave={this.handleMouseLeave}
+      >
+        <div ref="target" style={populate(styles.link)} onClick={this.handleClick}>
           <Avatar name={avatarText} size={40} round/>
              {this.renderText(styles)}
           <ArrowUp size={20} style={populate(styles.arrow)}/>
         </div>
+        <Popover
+          rootClose
+          borderColor="transparent"
+          show={this.state.showPopover}
+          onHide={() => this.updateState({showPopover: false})}
+          placement="top"
+          container={this}
+          target={ props => ReactDOM.findDOMNode(this.refs.target)}
+        >
+          {this.renderChildren(children)}
+        </Popover>
       </footer>
     )
   }
