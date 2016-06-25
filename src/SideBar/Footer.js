@@ -38,7 +38,7 @@ function getStyles(props, context, state) {
       alignItems: 'center'
     },
     text: {
-      fontSize: 12,
+      fontSize: 14,
       textAlign: 'left',
       color: textColor,
       textDecoration: 'none',
@@ -54,7 +54,7 @@ function getStyles(props, context, state) {
       opacity: expanded ? 0 : 1
     },
     subText: {
-      fontSize: 6,
+      fontSize: 12,
       color: textColor,
       textOverflow: 'ellipsis',
       whiteSpace: 'nowrap',
@@ -99,7 +99,7 @@ export default class Footer extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.expanded) {
-      this.updateState({showPopover: false});  
+      this.updateState({showPopover: false});
     }
   }
 
@@ -108,7 +108,10 @@ export default class Footer extends Component {
   }
 
   handleClick = (e) => {
-    this.updateState({showPopover: !this.state.showPopover});
+    this.updateState({showPopover: !this.props.expanded && !this.state.showPopover});
+    if (this.props.onClick) {
+      this.props.onClick(e);
+    }
   };
 
   handleMouseLeave = (event) => {
@@ -120,6 +123,20 @@ export default class Footer extends Component {
     this.updateState({hovered: true});
     this.props.onMouseEnter(event);
   };
+
+  calcAvatarText(text) {
+    if (/[\u4e00-\u9fa5]/.test(text)) {
+      // chinese name
+      return text.substr(text.length - 2);
+    }
+
+    const parts = text.split(' ');
+    let result = '';
+    for (let i = 0; i < parts.length; i++) {
+      result += parts[i].substr(0, 1).toUpperCase();
+    }
+    return result;
+  }
 
   renderText(styles) {
     const {text, subText} = this.props;
@@ -163,11 +180,12 @@ export default class Footer extends Component {
 
     return (
       <div style={populate(styles.root)}
+           onClick={this.handleClick}
            onMouseEnter={this.handleMouseEnter}
            onMouseLeave={this.handleMouseLeave}
       >
-        <div ref="target" style={populate(styles.link)} onClick={this.handleClick}>
-          <Avatar name={avatarText} size={40} round/>
+        <div ref="target" style={populate(styles.link)}>
+          <Avatar value={this.calcAvatarText(avatarText)} size={40} round/>
              {this.renderText(styles)}
           <ArrowUp size={20} style={populate(styles.arrow)}/>
         </div>

@@ -9,7 +9,7 @@ import spacing from '../styles/spacing';
 
 export default {
   spacing: spacing,
-  fontFamily: 'Hiragino Sans GB, Microsoft YaHei, WenQuanYi Micro Hei, sans-serif',
+  fontFamily: '-apple-system, BlinkMacSystemFont, San Francisco, Roboto, Segoe UI, Helvetica Neue, sans-serif',
   palette: {
     primary1Color: cyan700,
     primary2Color: cyan700,

@@ -26,7 +26,7 @@ function getStyles(props, context) {
 
   return {
     root: {
-      fontSize: 13,
+      fontSize: 14,
       fontFamily: fontFamily,
       zIndex: zIndex.sidebar,
       width: sidebar.width,
@@ -79,11 +79,11 @@ export default class SideBar extends Component {
   };
 
   delayUpdateExpandable(val, timeout) {
+    this.clearNavTimer();
     this._navTimer = setTimeout(() => this.updateExpandable(val), timeout || 500);
   }
 
   handlePrimaryMouseEnter = (e) => {
-    this.clearNavTimer();
     this.delayUpdateExpandable(false);
   };
 
@@ -105,7 +105,6 @@ export default class SideBar extends Component {
       e = e.parentNode;
     }
 
-    this.clearNavTimer();
     this.delayUpdateExpandable(true);
   };
 
@@ -120,6 +119,11 @@ export default class SideBar extends Component {
     this.clearNavTimer();
     this.updateExpandable(true);
     this.props.onSelect(fullid, nav);
+  };
+
+  handelFooterClick = () => {
+    // disable expandable
+    this.updateExpandable(false);
   };
 
   parseChildren(children) {
@@ -188,7 +192,7 @@ export default class SideBar extends Component {
     const expanded = expandable && selected && isGroup(selected);
 
     if (header) header = React.cloneElement(header, {expanded: expanded});
-    if (footer) footer = React.cloneElement(footer, {expanded: expanded});
+    if (footer) footer = React.cloneElement(footer, {expanded: expanded, onClick: this.handelFooterClick});
 
     const {populate} = this.context.teeTheme;
     const styles = getStyles(this.props, this.context);

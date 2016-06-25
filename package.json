@@ -4,7 +4,7 @@
   "description": "A React SideBar component",
   "main": "lib/index.js",
   "scripts": {
-    "start": "webpack-dev-server --inline --content-base examples/",
+    "start": "webpack-dev-server --host 0.0.0.0 --inline --content-base examples/",
     "clean": "rimraf lib",
     "build:commonjs": "babel src/ --out-dir lib/ --ignore __tests__,__mocks__",
     "build:umd": "webpack --devtool source-map --config webpack.build.js",

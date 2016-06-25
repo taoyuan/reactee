@@ -47,7 +47,7 @@ class App extends Component {
             <Nav id="password" text="Password"/>
           </Nav>
           <FlexSpacer/>
-          <Footer avatarText="Tao Yuan" text="Balabala Go" subText="Tao Yuan">
+          <Footer avatarText="Tao Yuan" text="Reactee" subText="Tao Yuan">
             <FooterMenuSection>
               <FooterMenuItem text="Your Profile"/>
               <FooterMenuItem text="Log Out"/>

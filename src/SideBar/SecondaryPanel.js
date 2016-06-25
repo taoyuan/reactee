@@ -40,19 +40,16 @@ function getStyles(props, context) {
       borderBottom: `1px solid ${sidebar.headerColor}`
     },
     heading: {
-      // fontSize: 16,
-      // lineHeight: '1.42857rem',
+      fontSize: 12,
       fontWeight: 600,
       textTransform: 'uppercase',
-      // letterSpacing: '0.04em',
-      color: sidebar.textColor,
+      color: sidebar.itemTextColor,
       flex: 1
     },
     list: {
       margin: 0,
       padding: 0,
       listStyle: 'none',
-
       position: 'absolute',
       width: width,
       display: 'none'
