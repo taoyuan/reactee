@@ -2,6 +2,8 @@
 
 A react ui library.
 
+![alt tag](https://raw.githubusercontent.com/taoyuan/reactee/master/docs/sidebar.png)
+
 ## Installing
 
 ```bash
