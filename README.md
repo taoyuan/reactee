@@ -1,6 +1,8 @@
-# reactee [![Build Status](https://travis-ci.org/taoyuan/reactee.svg?branch=master)](https://travis-ci.org/taoyuan/reactee)
+# reactee
 
 A react ui library.
+
+## SideBar Screenshot
 
 ![alt tag](https://raw.githubusercontent.com/taoyuan/reactee/master/docs/sidebar.png)
 
