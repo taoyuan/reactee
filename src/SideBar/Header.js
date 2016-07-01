@@ -52,7 +52,9 @@ export default class Header extends Component {
     expanded: PropTypes.bool,
     link: PropTypes.string,
     icon: PropTypes.any,
+    iconStyles: PropTypes.object,
     text: PropTypes.string,
+    textStyles: PropTypes.object,
     onClick: PropTypes.func
   };
 
@@ -65,17 +67,26 @@ export default class Header extends Component {
   };
 
   renderLogo(styles) {
-    const {icon} = this.props;
+    const {icon, iconStyles} = this.props;
     const {populate} = this.context.teeTheme;
-    if (typeof icon === 'function') {
-      return React.createElement(icon, {style: populate(styles.headerImage)});
-    } else {
-      return <img style={populate(styles.headerImage)} src={icon}/>;
+    if (icon) {
+      if (typeof icon === 'function') {
+        return React.createElement(icon, {style: populate(styles.headerImage)});
+      }
+      return <img style={populate({}, styles.headerImage, iconStyles)} src={icon}/>;
+    }
+  }
+
+  renderText(styles) {
+    const {text, textStyles} = this.props;
+    const {populate} = this.context.teeTheme;
+    if (text) {
+      return <span style={populate({}, styles.headerText, textStyles)}>{text}</span>;
     }
   }
 
   render() {
-    const {link, text, onClick} = this.props;
+    const {link, onClick} = this.props;
 
     const {populate} = this.context.teeTheme;
     const styles = getStyles(this.props, this.context);
@@ -84,7 +95,7 @@ export default class Header extends Component {
       <header style={populate(styles.header)} onClick={onClick}>
         <a href={link} style={populate(styles.headerLink)}>
            {this.renderLogo(styles)}
-             <span style={populate(styles.headerText)}>{text}</span>
+           {this.renderText(styles)}
         </a>
       </header>
     )
