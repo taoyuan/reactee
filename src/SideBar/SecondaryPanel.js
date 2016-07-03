@@ -7,7 +7,6 @@ import {getItems, pick, isGroup} from '../utils';
 import NavItem from './NavItem';
 
 function getStyles(props, context) {
-  const {visible} = props;
   const {
     teeTheme: {
       sidebar,
@@ -40,7 +39,7 @@ function getStyles(props, context) {
       borderBottom: `1px solid ${sidebar.headerColor}`
     },
     heading: {
-      fontSize: 12,
+      fontSize: 14,
       fontWeight: 600,
       textTransform: 'uppercase',
       color: sidebar.itemTextColor,
