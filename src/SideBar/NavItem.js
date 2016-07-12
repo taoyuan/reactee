@@ -33,7 +33,8 @@ function getStyles(props, context, state) {
       backgroundColor: 'transparent',
       border: 'none',
       cursor: 'pointer',
-      lineHeight: 'normal'
+      lineHeight: 'normal',
+      textDecoration: 'none'
     },
     text: {
       color: textColor,

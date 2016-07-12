@@ -49,6 +49,7 @@ export default class SideBar extends Component {
     link: PropTypes.string,
     text: PropTypes.string,
     //
+    style: PropTypes.object,
     navs: PropTypes.array,
     children: PropTypes.node,
     select: PropTypes.string,
@@ -182,7 +183,7 @@ export default class SideBar extends Component {
   }
 
   render() {
-    const {select, children}  = this.props;
+    const {select, style, children}  = this.props;
     const {expandable} = this.state;
 
     let {header, footer, items} = this.parseChildren(children);
@@ -199,7 +200,7 @@ export default class SideBar extends Component {
 
     return (
       <div ref="sidebar"
-           style={populate(styles.root)}
+           style={populate({}, styles.root, style)}
            onMouseLeave={this.handleMouseLeave}>
         <PrimaryPanel expanded={expanded}
                       header={header}
