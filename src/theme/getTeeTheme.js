@@ -61,7 +61,7 @@ export default function getTeeTheme(teeTheme, ...more) {
     rawTheme: baseTheme, // To provide backward compatibility.
   });
 
-  const transformers = [autoprefixer, rtl, callOnce].map((t) => t(teeTheme)).filter((t) => t);
+  const transformers = [autoprefixer, rtl/*, callOnce*/].map((t) => t(teeTheme)).filter((t) => t);
   const transform = compose(...transformers);
 
   teeTheme.populate = teeTheme.prepareStyles = function (...arg) {

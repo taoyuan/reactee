@@ -1,6 +1,6 @@
 import warning from 'warning';
 
-const CALLED_ONCE = 'muiPrepared';
+const CALLED_ONCE = 'teePrepared';
 
 export default function callOnce() {
   if (process.env.NODE_ENV !== 'production') {
