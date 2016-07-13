@@ -181,10 +181,15 @@ class PopoverPanel extends React.Component {
 export class Popover extends React.Component {
 
   render() {
+    const {
+      children,
+      ...settings
+    } = this.props;
+
     return (
-      <Overlay {...this.props}>
-        <PopoverPanel {...this.props}>
-                      {this.props.children}
+      <Overlay {...settings}>
+        <PopoverPanel {...settings}>
+                      {children}
         </PopoverPanel>
       </Overlay>
     );

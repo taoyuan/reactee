@@ -167,8 +167,8 @@ export default class SideBar extends Component {
       if (selectToUse !== s) {
         s += '.';
       }
-      // select default index 0 if no selection
-      const selected = selectToUse ? selectToUse.indexOf(s) === 0 : index === 0;
+
+      const selected = selectToUse && selectToUse.indexOf(s) === 0;
 
       let children = getItems(nav);
       if (selected && isGroup(nav)) {

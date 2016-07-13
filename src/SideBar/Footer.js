@@ -99,28 +99,24 @@ export default class Footer extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.expanded) {
-      this.updateState({showPopover: false});
+      this.setState({showPopover: false});
     }
   }
 
-  updateState(...args) {
-    this.setState(Object.assign({}, this.state, ...args));
-  }
-
   handleClick = (e) => {
-    this.updateState({showPopover: !this.props.expanded && !this.state.showPopover});
+    this.setState({showPopover: !this.props.expanded && !this.state.showPopover});
     if (this.props.onClick) {
       this.props.onClick(e);
     }
   };
 
   handleMouseLeave = (event) => {
-    this.updateState({hovered: false});
+    this.setState({hovered: false});
     this.props.onMouseLeave(event);
   };
 
   handleMouseEnter = (event) => {
-    this.updateState({hovered: true});
+    this.setState({hovered: true});
     this.props.onMouseEnter(event);
   };
 
@@ -193,7 +189,7 @@ export default class Footer extends Component {
           rootClose
           borderColor="transparent"
           show={showPopover}
-          onHide={() => this.updateState({showPopover: false})}
+          onHide={() => this.setState({showPopover: false})}
           placement="top"
           container={this}
           target={ props => ReactDOM.findDOMNode(this.refs.target)}
