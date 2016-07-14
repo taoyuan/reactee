@@ -86,7 +86,7 @@
     "lodash": "^4.13.1",
     "object-assign": "^4.1.0",
     "react-addons-shallow-compare": "^15.1.0",
-    "react-avatar": "^1.2.1",
+    "react-avatar": "taoyuan/react-avatar",
     "react-icon-base": "^2.0.0",
     "react-motion": "^0.4.4",
     "react-overlays": "^0.6.3",
