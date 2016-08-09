@@ -150,7 +150,7 @@ export default class Footer extends Component {
     return (
       <span style={populate(styles.text)}>
             {text}
-            {sub}
+        {sub}
       </span>
     )
   }
@@ -182,7 +182,7 @@ export default class Footer extends Component {
       >
         <div ref="target" style={populate(styles.link)}>
           <Avatar value={this.calcAvatarText(avatarText)} size={40} round/>
-             {this.renderText(styles)}
+          {this.renderText(styles)}
           <ArrowUp size={20} style={populate(styles.arrow)}/>
         </div>
         <Popover

@@ -62,14 +62,14 @@ export default class PrimaryPanel extends Component {
     const styles = getStyles(this.props, this.context);
     return (
       <div {...settings} style={populate(styles.root)}>
-           {header}
-           <section style={{flex: 1}}>
-           {/*{this.renderPrimaryHeader(populate, styles)}*/}
-           {items.map((item, index) =>
-             <NavItem key={`primary-item-${index}`} item={item} expanded={expanded} onClick={this.handleNavItemClick}/>
-           )}
-           </section>
-           {footer}
+        {header}
+        <section style={{flex: 1, display: 'flex', flexDirection: 'column'}}>
+          {/*{this.renderPrimaryHeader(populate, styles)}*/}
+          {items.map((item, index) =>
+            <NavItem key={`primary-item-${index}`} item={item} expanded={expanded} onClick={this.handleNavItemClick}/>
+          )}
+        </section>
+        {footer}
       </div>
     )
   }

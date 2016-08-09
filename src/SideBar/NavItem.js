@@ -134,9 +134,9 @@ export default class NavItem extends Component {
           onMouseEnter={this.handleMouseEnter}
           onMouseLeave={this.handleMouseLeave}>
         <a style={populate(styles.link)} href={url} onClick={() => this.handleClick(item)}>
-           {icon && this.renderIcon(icon, styles.icon)}
-           {icon ? <span style={populate(styles.text)}>{text}</span> : text}
-           {arrow}
+          {icon && this.renderIcon(icon, styles.icon)}
+          {icon ? <span style={populate(styles.text)}>{text}</span> : text}
+          {arrow}
         </a>
       </li>
     )

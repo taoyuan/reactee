@@ -86,7 +86,7 @@ export default class FooterMenuItem extends Component {
           onMouseLeave={this.handleMouseLeave}
       >
         <a href={url} style={{...populate(styles.link), ...linkStyle}}>
-           {text}
+          {text}
         </a>
       </li>
     )

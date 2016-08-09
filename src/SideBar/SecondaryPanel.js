@@ -92,21 +92,21 @@ export default class SecondaryPanel extends Component {
                   {stiffness: 500, damping: 40}
                 )
               }}>
-              {({x}) =>
-                <div
-                  style={populate({}, styles.list, owner.props.selected ? styles.listOpen : null, {
-                    transform: `translate3d(${x}px, 0, 0)`
-                  })}
-                >
-                  <li style={populate({}, styles.header)}>
-                    <h6 style={populate({}, styles.heading)}>{owner.props.text}</h6>
-                  </li>
-                  {items.map((item, index) =>
-                    <NavItem key={`primary-item-${index}`} item={item}
-                             onClick={(item) => this.handleNavItemClick(owner, item)}/>
-                  )}
-                </div>
-              }
+        {({x}) =>
+          <div
+            style={populate({}, styles.list, owner.props.selected ? styles.listOpen : null, {
+              transform: `translate3d(${x}px, 0, 0)`
+            })}
+          >
+            <li style={populate({}, styles.header)}>
+              <h6 style={populate({}, styles.heading)}>{owner.props.text}</h6>
+            </li>
+            {items.map((item, index) =>
+              <NavItem key={`primary-item-${index}`} item={item}
+                       onClick={(item) => this.handleNavItemClick(owner, item)}/>
+            )}
+          </div>
+        }
       </Motion>
     )
   }
@@ -118,14 +118,14 @@ export default class SecondaryPanel extends Component {
     const styles = getStyles(this.props, this.context);
     return (
       <Motion style={{x: spring(visible ? sidebar.collapseWidth : sidebar.width, {stiffness: 500, damping: 40})}}>
-              {({x}) =>
-                <div {...settings}
-                     style={populate({}, styles.root, {
-                       transform: `translate3d(${x}px, 0, 0)`
-                     })}>
-                     {items.map(item => isGroup(item) && this.renderSecondaryList(item, styles))}
-                </div>
-              }
+        {({x}) =>
+          <div {...settings}
+               style={populate({}, styles.root, {
+                 transform: `translate3d(${x}px, 0, 0)`
+               })}>
+            {items.map(item => isGroup(item) && this.renderSecondaryList(item, styles))}
+          </div>
+        }
       </Motion>
     )
   }

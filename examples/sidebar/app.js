@@ -5,7 +5,7 @@ import ReactDOM from 'react-dom';
 
 import {
   TeeThemeProvider, SideBar, Header, Nav, Spacer, FlexSpacer, Footer,
-  FooterMenuSection, FooterMenuItem
+  FooterMenuSection, FooterMenuItem, Divider
 } from '../../src';
 
 import {
@@ -37,7 +37,8 @@ class App extends Component {
           <Nav id="home" icon={MdHome} text="主页"/>
           <Nav id="hubs" icon={MdDeviceHub} text="Hubs"/>
           <Nav id="device" icon={MdDevicesOther} text="Devices"/>
-          <Spacer/>
+          <FlexSpacer/>
+          <Divider/>
           <Nav id="apps" icon={MdApps} text="Applications">
             <Nav id="app1" text="Application"/>
           </Nav>
@@ -46,7 +47,7 @@ class App extends Component {
             <Nav id="account" text="Account"/>
             <Nav id="password" text="Password"/>
           </Nav>
-          <FlexSpacer/>
+          <Divider/>
           <Footer avatarText="Tao Yuan" text="Reactee" subText="Tao Yuan">
             <FooterMenuSection>
               <FooterMenuItem text="Your Profile"/>

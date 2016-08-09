@@ -1,4 +1,5 @@
 export {default as SideBar} from './SideBar';
+export {default as Divider} from './Divider';
 export {default as Spacer} from './Spacer';
 export {default as FlexSpacer} from './FlexSpacer';
 export {default as Nav} from './Nav';

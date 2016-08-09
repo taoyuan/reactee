@@ -94,8 +94,8 @@ export default class Header extends Component {
     return (
       <header style={populate(styles.header)} onClick={onClick}>
         <a href={link} style={populate(styles.headerLink)}>
-           {this.renderLogo(styles)}
-           {this.renderText(styles)}
+          {this.renderLogo(styles)}
+          {this.renderText(styles)}
         </a>
       </header>
     )
