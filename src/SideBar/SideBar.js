@@ -8,6 +8,7 @@ import {noop, getItems, isGroup, pick} from '../utils';
 import Header from './Header';
 import Footer from './Footer';
 import Nav from './Nav';
+import Divider from './Divider';
 import Spacer from './Spacer';
 import FlexSpacer from './FlexSpacer';
 
@@ -128,7 +129,7 @@ export default class SideBar extends Component {
   };
 
   parseChildren(children) {
-    const VLAID_CHILDREN = [Header, Footer, Nav, Spacer, FlexSpacer];
+    const VLAID_CHILDREN = [Header, Footer, Nav, Divider, Spacer, FlexSpacer];
     let header, footer, items = [];
 
     React.Children.forEach(children, (item, index) => {
