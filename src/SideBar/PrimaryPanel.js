@@ -36,6 +36,7 @@ function getStyles(props, context) {
 export default class PrimaryPanel extends Component {
 
   static propTypes = {
+    style: PropTypes.object,
     header: PropTypes.element,
     footer: PropTypes.element,
     items: PropTypes.array.isRequired,
@@ -56,12 +57,12 @@ export default class PrimaryPanel extends Component {
   };
 
   render() {
-    const {header, footer, items, expanded} = this.props;
+    const {style, header, footer, items, expanded} = this.props;
     const settings = pick(this.props, 'onMouseEnter', 'onMouseLeave');
     const {populate} = this.context.teeTheme;
     const styles = getStyles(this.props, this.context);
     return (
-      <div {...settings} style={populate(styles.root)}>
+      <div {...settings} style={populate({}, styles.root, style)}>
         {header}
         {items.map((item, index) =>
           <NavItem key={`primary-item-${index}`} item={item} expanded={expanded} onClick={this.handleNavItemClick}/>

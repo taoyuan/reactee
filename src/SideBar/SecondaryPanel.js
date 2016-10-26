@@ -63,6 +63,7 @@ function getStyles(props, context) {
 export default class SecondaryPanel extends Component {
 
   static propTypes = {
+    style: PropTypes.object,
     items: PropTypes.array.isRequired,
     visible: PropTypes.bool,
     onSelect: PropTypes.func,
@@ -112,7 +113,7 @@ export default class SecondaryPanel extends Component {
   }
 
   render() {
-    const {items, visible} = this.props;
+    const {style, items, visible} = this.props;
     const settings = pick(this.props, 'onMouseEnter', 'onMouseLeave');
     const {populate, sidebar} = this.context.teeTheme;
     const styles = getStyles(this.props, this.context);
@@ -122,7 +123,7 @@ export default class SecondaryPanel extends Component {
           <div {...settings}
                style={populate({}, styles.root, {
                  transform: `translate3d(${x}px, 0, 0)`
-               })}>
+               }, style)}>
             {items.map(item => isGroup(item) && this.renderSecondaryList(item, styles))}
           </div>
         }
