@@ -51,6 +51,8 @@ export default class SideBar extends Component {
     text: PropTypes.string,
     //
     style: PropTypes.object,
+    primaryStyle: PropTypes.object,
+    secondaryStyle: PropTypes.object,
     navs: PropTypes.array,
     children: PropTypes.node,
     select: PropTypes.string,
@@ -184,7 +186,7 @@ export default class SideBar extends Component {
   }
 
   render() {
-    const {select, style, children}  = this.props;
+    const {select, children, style, primaryStyle, secondaryStyle}  = this.props;
     const {expandable} = this.state;
 
     let {header, footer, items} = this.parseChildren(children);
@@ -203,17 +205,21 @@ export default class SideBar extends Component {
       <div ref="sidebar"
            style={populate({}, styles.root, style)}
            onMouseLeave={this.handleMouseLeave}>
-        <PrimaryPanel expanded={expanded}
-                      header={header}
-                      footer={footer}
-                      items={items}
-                      onSelect={this.handleSelect}
-                      onMouseEnter={this.handlePrimaryMouseEnter}
+        <PrimaryPanel
+          style={primaryStyle}
+          expanded={expanded}
+          header={header}
+          footer={footer}
+          items={items}
+          onSelect={this.handleSelect}
+          onMouseEnter={this.handlePrimaryMouseEnter}
         />
-        <SecondaryPanel items={items}
-                        visible={expanded}
-                        onSelect={this.handleSelect}
-                        onMouseEnter={this.handleSecondaryMouseEnter}/>
+        <SecondaryPanel
+          style={secondaryStyle}
+          items={items}
+          visible={expanded}
+          onSelect={this.handleSelect}
+          onMouseEnter={this.handleSecondaryMouseEnter}/>
       </div>
     );
   }
