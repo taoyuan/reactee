@@ -29,13 +29,13 @@ module.exports = {
   output: {
     filename: '[name].js',
     chunkFilename: '[id].chunk.js',
-    path: 'examples/__build__',
+    path: path.resolve('./examples/__build__'),
     publicPath: '/__build__/'
   },
 
   resolve: {
-    extensions: ['', '.js', '.jsx', '.less', '.css'],
-    packageMains: ['webpack', 'browser', 'web', 'browserify', ['jam', 'main'], 'main', 'style']
+    extensions: ['.js', '.jsx', '.less', '.css'],
+    mainFields: ['webpack', 'browser', 'web', 'browserify', ['jam', 'main'], 'main', 'style']
   },
 
   module: {
@@ -67,7 +67,7 @@ module.exports = {
 
   plugins: [
     // new ExtractTextPlugin('style.css', {allChunks: true}),
-    new webpack.optimize.CommonsChunkPlugin('shared.js')
+    new webpack.optimize.CommonsChunkPlugin('shared')
   ]
 
 };

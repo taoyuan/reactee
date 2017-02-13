@@ -1,13 +1,13 @@
-var path = require('path');
-var webpack = require('webpack');
+const path = require('path');
+const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
-var BASE_DIR = process.cwd();
-var COMPONENT_FILE = 'reactee';
-var COMPONENT_NAME = 'SideBar';
+const BASE_DIR = process.cwd();
+const COMPONENT_NAME = 'SideBar';
+let COMPONENT_FILE = 'reactee';
 
-var plugins = [
-  new ExtractTextPlugin('style.css', {allChunks: true}),
+const plugins = [
+  new ExtractTextPlugin({filename: 'style.css', allChunks: true}),
 ];
 
 function getPackageMain() {
@@ -33,8 +33,8 @@ module.exports = {
     'react-dom': 'ReactDOM'
   },
   resolve: {
-    extensions: ['', '.js', '.jsx', '.less', '.css'],
-    packageMains: ['webpack', 'browser', 'web', 'browserify', ['jam', 'main'], 'main', 'style']
+    extensions: ['.js', '.jsx', '.less', '.css'],
+    mainFields: ['webpack', 'browser', 'web', 'browserify', ['jam', 'main'], 'main', 'style']
   },
   module: {
     loaders: [
@@ -45,12 +45,12 @@ module.exports = {
       },
       {
         test: /\.global\.(css|less)$/,
-        loader: ExtractTextPlugin.extract('style', 'css?sourceMap!postcss!less?sourceMap')
+        loader: ExtractTextPlugin.extract({fallback: 'style', use: 'css?sourceMap!postcss!less?sourceMap'})
       },
 
       {
         test: /^((?!\.global).)*\.(css|less)$/,
-        loader: ExtractTextPlugin.extract('style', 'css?sourceMap&modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!postcss!less?sourceMap')
+        loader: ExtractTextPlugin.extract({fallback: 'style', use: 'css?sourceMap&modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!postcss!less?sourceMap'})
       },
       {
         test: /\.(png|jpg|gif|woff|woff2)$/,
