@@ -100,7 +100,7 @@ export default class SecondaryPanel extends Component {
             })}
           >
             <li style={populate({}, styles.header)}>
-              <h6 style={populate({}, styles.heading)}>{owner.props.text}</h6>
+              <h6 style={populate({}, styles.heading)}>{owner.props.title || owner.props.text}</h6>
             </li>
             {items.map((item, index) =>
               <NavItem key={`primary-item-${index}`} item={item}

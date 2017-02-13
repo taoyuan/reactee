@@ -10,6 +10,7 @@ export default class Nav extends Component {
     fullid: PropTypes.string,
     icon: PropTypes.any,
     text: PropTypes.string.isRequired,
+    title: PropTypes.string,
     url: PropTypes.string,
     selected: PropTypes.bool,
     children: PropTypes.node,

@@ -42,7 +42,7 @@ class App extends Component {
           <Nav id="apps" icon={MdApps} text="Applications">
             <Nav id="app1" text="Application"/>
           </Nav>
-          <Nav id="settings" icon={MdSettingsApplications} text="Settings">
+          <Nav id="settings" icon={MdSettingsApplications} text="Settings" title="设置">
             <Nav id="api" text="API"/>
             <Nav id="account" text="Account"/>
             <Nav id="password" text="Password"/>
