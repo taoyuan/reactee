@@ -1,5 +1,7 @@
 # reactee
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/taoyuan/reactee.svg)](https://greenkeeper.io/)
+
 A react ui library.
 
 ## SideBar Screenshot
